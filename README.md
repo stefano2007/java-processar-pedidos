@@ -47,18 +47,18 @@ Projeto: java-processar-pedidos
 
 ## Plano de trabalho
 Elabore e entregue um plano de trabalho.
-  - Criar aplicação Java (JDK 21, Spring 3.5.13 e Maven) [Spring Initializr](https://start.spring.io/)
+  - [x] Criar aplicação Java (JDK 21, Spring 3.5.13 e Maven) [Spring Initializr](https://start.spring.io/)
   > Dependências: Spring Web, Spring Data MongoDB e Spring for RabbitMQ.
-  - Criar repositório publico no GitHub [java-processar-pedidos](https://github.com/stefano2007/java-processar-pedidos)
-  - Configurar o RabbitMQ e MongoDB no Docker.
-  - Configurar a Comunicação do Spring Boot com o MongoDB
-  - Configurar a Comunicação do Spring Boot com o RabbitMQ
-  - Criar a funcionalidade de cadastro de Order no MongoDB
-  - Criar endpoint de listagem de pedidos do cliente
-  - Criar serviço de listagem de pedidos do cliente
-  - Criar serviço que calcula o valor total de todos os pedidos do cliente
-  - Testar aplicação completa
-  - Criar testes unitários e integrados
+  - [x] Criar repositório publico no GitHub [java-processar-pedidos](https://github.com/stefano2007/java-processar-pedidos)
+  - [x] Configurar o RabbitMQ e MongoDB no Docker.
+  - [ ] Configurar a Comunicação do Spring Boot com o MongoDB
+  - [ ] Configurar a Comunicação do Spring Boot com o RabbitMQ
+  - [ ] Criar a funcionalidade de cadastro de Order no MongoDB
+  - [ ] Criar endpoint de listagem de pedidos do cliente
+  - [ ] Criar serviço de listagem de pedidos do cliente
+  - [ ] Criar serviço que calcula o valor total de todos os pedidos do cliente
+  - [ ] Testar aplicação completa
+  - [ ] Criar testes unitários e integrados
 
 ## Tecnologias utilizadas
 - Java 21
@@ -69,3 +69,12 @@ Elabore e entregue um plano de trabalho.
 - RabbitMQ
 - Docker
 - Maven
+
+## Iniciar Projeto
+1. Clone o repositório: `git clone
+2. Navegue até o diretório do projeto: `cd java-processar-pedidos`
+3. Configure o MongoDB e RabbitMQ no Docker: 
+```bash
+cd local
+docker compose up -d
+```
