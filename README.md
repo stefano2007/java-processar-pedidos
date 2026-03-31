@@ -51,8 +51,8 @@ Elabore e entregue um plano de trabalho.
   > Dependências: Spring Web, Spring Data MongoDB e Spring for RabbitMQ.
   - [x] Criar repositório publico no GitHub [java-processar-pedidos](https://github.com/stefano2007/java-processar-pedidos)
   - [x] Configurar o RabbitMQ e MongoDB no Docker.
+  - [x] Configurar a Comunicação do Spring Boot com o RabbitMQ
   - [ ] Configurar a Comunicação do Spring Boot com o MongoDB
-  - [ ] Configurar a Comunicação do Spring Boot com o RabbitMQ
   - [ ] Criar a funcionalidade de cadastro de Order no MongoDB
   - [ ] Criar endpoint de listagem de pedidos do cliente
   - [ ] Criar serviço de listagem de pedidos do cliente
@@ -78,3 +78,6 @@ Elabore e entregue um plano de trabalho.
 cd local
 docker compose up -d
 ```
+4. RabbitMQ: `http://localhost:15672/` (usuário: guest, senha: guest)
+ - No RabbitMQ deve ser configurado com uma fila chamada `pedido-criado`.
+
