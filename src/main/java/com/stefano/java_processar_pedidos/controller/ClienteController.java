@@ -25,7 +25,7 @@ public class ClienteController {
     public ResponseEntity<ClienteQuantidadeResponse> obterQuantidadePedidosCliente(
             @PathVariable("clienteId") Long clienteId
     ) {
-        return ResponseEntity.ok(pedidoService.obterQuantidadePedidosCliente(clienteId));
+        return ResponseEntity.of(pedidoService.obterQuantidadePedidosCliente(clienteId));
     }
 
 

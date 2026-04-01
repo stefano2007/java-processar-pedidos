@@ -57,8 +57,9 @@ Elabore e entregue um plano de trabalho.
   - [x] Criar endpoint de listagem de pedidos do cliente
   - [x] Criar serviço de listagem de pedidos do cliente
   - [x] Criar serviço que calcula o valor total de todos os pedidos do cliente
-  - [ ] Testar aplicação completa
+  - [x] Testar aplicação completa
   - [ ] Criar testes unitários e integrados
+  - [ ] **Plus** Lista todos clientes agrupados por quantidade e valor total dos pedidos (usar agregação do MongoDB)
 
 ## Tecnologias utilizadas
 - Java 21
@@ -73,23 +74,41 @@ Elabore e entregue um plano de trabalho.
 # Endpoints
 
 - Valor total do pedido
-> GET http://localhost:9090/api/pedidos/1001/total
+```
+curl --request GET \
+--url http://localhost:9090/api/pedidos/1001/total
+```
+Status: 200 OK
 ```
 {
 	"pedidoId": 1001,
 	"valorTotal": 120.00
 }
 ```
+Status: 404 Not Found
+```
+```
 - Quantidade de Pedidos por Cliente
-> GET http://localhost:9090/api/clientes/1/pedidos/quantidade
+Status: 200 OK
+```
+curl --request GET \
+  --url http://localhost:9090/api/clientes/1/pedidos/quantidade
+```
 ```
 {
 	"clienteId": 1,
 	"quantidadePedidos": 1
 }
 ```
+Status: 404 Not Found
+```
+```
 - Lista de pedidos realizados por cliente
-> GET http://localhost:9090/api/clientes/1/pedidos?page=0&pageSize=10
+```
+curl --request GET \
+--url 'http://localhost:9090/api/clientes/1/pedidos?page=0&pageSize=10'
+```
+Status: 200 OK
 ```
 {
   "content": [
@@ -116,7 +135,16 @@ Elabore e entregue um plano de trabalho.
   "totalPages": 1
 }
 ```
-
+Status: 200 OK (sem pedidos)
+```
+{
+  "content": [],
+  "page": 0,
+  "size": 10,
+  "totalElements": 0,
+  "totalPages": 0
+}
+```
 ## Iniciar Projeto
 1. Clone o repositório: `git clone
 2. Navegue até o diretório do projeto: `cd java-processar-pedidos`
