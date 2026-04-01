@@ -54,9 +54,9 @@ Elabore e entregue um plano de trabalho.
   - [x] Configurar a Comunicação do Spring Boot com o RabbitMQ
   - [x] Configurar a Comunicação do Spring Boot com o MongoDB
   - [x] Criar a funcionalidade de cadastro de Pedido no MongoDB
-  - [ ] Criar endpoint de listagem de pedidos do cliente
-  - [ ] Criar serviço de listagem de pedidos do cliente
-  - [ ] Criar serviço que calcula o valor total de todos os pedidos do cliente
+  - [x] Criar endpoint de listagem de pedidos do cliente
+  - [x] Criar serviço de listagem de pedidos do cliente
+  - [x] Criar serviço que calcula o valor total de todos os pedidos do cliente
   - [ ] Testar aplicação completa
   - [ ] Criar testes unitários e integrados
 
@@ -69,6 +69,53 @@ Elabore e entregue um plano de trabalho.
 - RabbitMQ
 - Docker
 - Maven
+
+# Endpoints
+
+- Valor total do pedido
+> GET http://localhost:9090/api/pedidos/1001/total
+```
+{
+	"pedidoId": 1001,
+	"valorTotal": 120.00
+}
+```
+- Quantidade de Pedidos por Cliente
+> GET http://localhost:9090/api/clientes/1/pedidos/quantidade
+```
+{
+	"clienteId": 1,
+	"quantidadePedidos": 1
+}
+```
+- Lista de pedidos realizados por cliente
+> GET http://localhost:9090/api/clientes/1/pedidos?page=0&pageSize=10
+```
+{
+  "content": [
+    {
+        "pedidoId": 1001,
+        "valorTotal": 120.00,
+        "itens": [
+            {
+                "produto": "lápis",
+                "quantidade": 100,
+                "preco": 1.10
+            },
+            {
+                "produto": "caderno",
+                "quantidade": 10,
+                "preco": 1.00
+            }
+        ]
+    }
+  ],
+  "page": 0,
+  "size": 10,
+  "totalElements": 1,
+  "totalPages": 1
+}
+```
 
 ## Iniciar Projeto
 1. Clone o repositório: `git clone
