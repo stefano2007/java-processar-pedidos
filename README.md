@@ -52,8 +52,8 @@ Elabore e entregue um plano de trabalho.
   - [x] Criar repositório publico no GitHub [java-processar-pedidos](https://github.com/stefano2007/java-processar-pedidos)
   - [x] Configurar o RabbitMQ e MongoDB no Docker.
   - [x] Configurar a Comunicação do Spring Boot com o RabbitMQ
-  - [ ] Configurar a Comunicação do Spring Boot com o MongoDB
-  - [ ] Criar a funcionalidade de cadastro de Order no MongoDB
+  - [x] Configurar a Comunicação do Spring Boot com o MongoDB
+  - [x] Criar a funcionalidade de cadastro de Pedido no MongoDB
   - [ ] Criar endpoint de listagem de pedidos do cliente
   - [ ] Criar serviço de listagem de pedidos do cliente
   - [ ] Criar serviço que calcula o valor total de todos os pedidos do cliente
@@ -81,3 +81,5 @@ docker compose up -d
 4. RabbitMQ: `http://localhost:15672/` (usuário: guest, senha: guest)
  - No RabbitMQ deve ser configurado com uma fila chamada `pedido-criado`.
 
+5. MongoDB: `mongodb://localhost:27017/` (banco de dados: pedidosdb)
+ - No MongoDB deve ser configurado com uma coleção chamada `tb_pedidos`.
