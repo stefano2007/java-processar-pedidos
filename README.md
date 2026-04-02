@@ -58,7 +58,8 @@ Elabore e entregue um plano de trabalho.
   - [x] Criar serviço de listagem de pedidos do cliente
   - [x] Criar serviço que calcula o valor total de todos os pedidos do cliente
   - [x] Testar aplicação completa
-  - [ ] Criar testes unitários e integrados
+  - [x] Criar testes unitários e integrados
+  - [x] Criar testes integrados (Cucumber + Rest assured + Testcontainers)
   - [ ] **Plus** Lista todos clientes agrupados por quantidade e valor total dos pedidos (usar agregação do MongoDB)
 
 ## Tecnologias utilizadas
