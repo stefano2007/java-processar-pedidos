@@ -36,3 +36,9 @@ Funcionalidade: Processamento de pedidos
     Quando consultar pedidos do cliente 999 pagina 0 tamanho 10
     Então o status deve ser 200
     E deve retornar lista vazia
+
+  Cenário: Deve retornar resumo de pedidos por cliente
+    Dado que existe pedido para cliente 1
+    Quando eu chamar o endpoint de resumo de pedidos
+    Então o status deve ser 200
+    E deve retornar a lista de resumo de pedidos

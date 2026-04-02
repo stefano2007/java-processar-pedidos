@@ -1,12 +1,14 @@
 package com.stefano.java_processar_pedidos.service;
 
 import com.stefano.java_processar_pedidos.controller.dto.ClienteQuantidadeResponse;
+import com.stefano.java_processar_pedidos.controller.dto.ClienteResumoPedidoResponse;
 import com.stefano.java_processar_pedidos.controller.dto.PagePedidoResponse;
 import com.stefano.java_processar_pedidos.controller.dto.PedidoTotalResponse;
 import com.stefano.java_processar_pedidos.entity.PedidoEntity;
 import com.stefano.java_processar_pedidos.entity.PedidoItemEntity;
 import com.stefano.java_processar_pedidos.listener.dto.PedidoCriadoMessage;
 import com.stefano.java_processar_pedidos.repository.PedidoRepository;
+import org.bson.Document;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,6 +21,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -32,6 +37,9 @@ class PedidoServiceTest {
 
     @Mock
     private PedidoRepository pedidoRepository;
+
+    @Mock
+    private MongoTemplate mongoTemplate;
 
     @InjectMocks
     private PedidoService pedidoService;
@@ -171,5 +179,42 @@ class PedidoServiceTest {
         // Assert
         Assertions.assertTrue(response.isEmpty());
         verify(pedidoRepository, times(1)).countByClienteId(clienteId);
+    }
+
+    @Test
+    void deveRetornarResumoDePedidosPorCliente() {
+
+        // Arrange
+        ClienteResumoPedidoResponse mockResponse =
+                new ClienteResumoPedidoResponse(
+                        1L,
+                        BigDecimal.valueOf(120.0),
+                        1
+                );
+
+        List<ClienteResumoPedidoResponse> listaMock = List.of(mockResponse);
+
+        AggregationResults<ClienteResumoPedidoResponse> aggregationResults =
+                new AggregationResults<>(listaMock, new Document());
+
+        when(mongoTemplate.aggregate(
+                any(Aggregation.class),
+                anyString(),
+                any(Class.class)
+        )).thenReturn(aggregationResults);
+
+        // Act
+        List<ClienteResumoPedidoResponse> resultado =
+                pedidoService.obterClienteResumoPedidos();
+
+        // Assert
+        Assertions.assertNotNull(resultado);
+        Assertions.assertEquals(1, resultado.size());
+
+        ClienteResumoPedidoResponse item = resultado.get(0);
+
+        Assertions.assertEquals(1L, item.id());
+        Assertions.assertEquals(BigDecimal.valueOf(120.0), item.totalPedidos());
+        Assertions.assertEquals(1, item.quantidadePedidos());
     }
 }

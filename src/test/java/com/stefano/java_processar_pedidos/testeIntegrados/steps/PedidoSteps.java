@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static com.stefano.java_processar_pedidos.config.RabbitMqConfig.PEDIDO_CRIADO_QUEUE;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 
 public class PedidoSteps {
 
@@ -53,13 +53,15 @@ public class PedidoSteps {
     public void validarPersistencia() throws InterruptedException {
         Thread.sleep(2000);
 
-        List<PedidoEntity> pedidos = pedidoRepository.findAll();
+        Long pedidoId = 1000L;
 
-        Assertions.assertFalse(pedidos.isEmpty());
-        Assertions.assertEquals(1000L, pedidos.get(0).getPedidoId());
-        Assertions.assertEquals(1000L, pedidos.get(0).getClienteId());
-        Assertions.assertEquals(BigDecimal.ZERO, pedidos.get(0).getValorTotal());
-        Assertions.assertEquals(1, pedidos.size());
+        PedidoEntity pedido = pedidoRepository.findById(pedidoId)
+                .orElseThrow();
+
+        Assertions.assertEquals(pedidoId, pedido.getPedidoId());
+        Assertions.assertEquals(pedidoId, pedido.getClienteId());
+        Assertions.assertEquals(BigDecimal.ZERO, pedido.getValorTotal());
+        Assertions.assertEquals(0, pedido.getItens().size());
     }
 
 
@@ -146,4 +148,25 @@ public class PedidoSteps {
         response.then()
                 .body("content.size()", equalTo(0));
     }
+
+    @Quando("eu chamar o endpoint de resumo de pedidos")
+    public void chamarEndpointResumoPedidos() {
+        response = RestAssured
+                .given()
+                .port(port)
+                .when()
+                .get("/api/clientes/resumo-pedidos")
+                .then()
+                .extract()
+                .response();
+    }
+
+    @Então("deve retornar a lista de resumo de pedidos")
+    public void validarResposta() {
+        response.then()
+                .body("[0].clienteId", equalTo(1))
+                .body("[0].totalPedidos", equalTo(120.00F))
+                .body("[0].quantidadePedidos", equalTo(1));
+    }
+
 }

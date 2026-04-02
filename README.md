@@ -60,7 +60,30 @@ Elabore e entregue um plano de trabalho.
   - [x] Testar aplicação completa
   - [x] Criar testes unitários e integrados
   - [x] Criar testes integrados (Cucumber + Rest assured + Testcontainers)
-  - [ ] **Plus** Lista todos clientes agrupados por quantidade e valor total dos pedidos (usar agregação do MongoDB)
+  - [x] **Plus** Lista todos clientes agrupados por quantidade e valor total dos pedidos (usar agregação do MongoDB)
+
+``` 
+db.tb_pedidos.aggregate([
+  {
+    $group: {
+      _id: "$clienteId",
+      totalPedidos: {
+        $sum: "$valorTotal"
+      },
+      quantidadePedidos: {
+        $sum: 1
+      }
+    }
+  },
+  {
+    $sort: {
+      totalPedidos: -1,
+      _id: 1
+    }
+  }
+])
+```
+
 
 ## Tecnologias utilizadas
 - Java 21
@@ -146,6 +169,27 @@ Status: 200 OK (sem pedidos)
   "totalPages": 0
 }
 ```
+
+- Lista de Clientes por totalPedidos e quantidadePedidos
+```
+curl --request GET \
+--url 'http://localhost:9090/api/clientes/resumo-pedidos'
+```
+Status: 200 OK
+```
+[
+  {
+    "clienteId": 1,
+    "totalPedidos": 120.00,
+    "quantidadePedidos": 1
+  }
+]
+```
+Status: 200 OK (sem clientes)
+```
+[ ]
+```
+
 ## Iniciar Projeto
 1. Clone o repositório: `git clone
 2. Navegue até o diretório do projeto: `cd java-processar-pedidos`

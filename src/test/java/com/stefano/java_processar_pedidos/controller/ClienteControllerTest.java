@@ -1,6 +1,7 @@
 package com.stefano.java_processar_pedidos.controller;
 
 import com.stefano.java_processar_pedidos.controller.dto.ClienteQuantidadeResponse;
+import com.stefano.java_processar_pedidos.controller.dto.ClienteResumoPedidoResponse;
 import com.stefano.java_processar_pedidos.controller.dto.PagePedidoResponse;
 import com.stefano.java_processar_pedidos.controller.dto.PedidoResponse;
 import com.stefano.java_processar_pedidos.service.PedidoService;
@@ -163,5 +164,34 @@ class ClienteControllerTest {
         List<PedidoResponse> pedidoResponses = clienteQuantidadeResponse.content();
 
         Assertions.assertEquals(0, pedidoResponses.size());
+    }
+
+
+    @Test
+    void deveRetornarClienteResumoPedidosComSucesso() {
+        //Arrange
+        Long clienteId = 1L;
+        when(pedidoService.obterClienteResumoPedidos())
+                .thenReturn(List.of(
+                        new ClienteResumoPedidoResponse(
+                                clienteId,
+                                BigDecimal.valueOf(120.0),
+                                1
+                        )
+                ));
+
+        //Act
+        ResponseEntity<List<ClienteResumoPedidoResponse>> resultado = clienteController.obterClienteResumoPedidos();
+
+        //Assert
+        Assertions.assertEquals(resultado.getStatusCode(), HttpStatusCode.valueOf(200));
+
+        Assertions.assertEquals(1, resultado.getBody().size());
+
+        ClienteResumoPedidoResponse clienteQuantidadeResponse = resultado.getBody().get(0);
+        Assertions.assertNotNull(clienteQuantidadeResponse);
+        Assertions.assertEquals(clienteId, clienteQuantidadeResponse.id());
+        Assertions.assertEquals(BigDecimal.valueOf(120.0), clienteQuantidadeResponse.totalPedidos());
+        Assertions.assertEquals(1, clienteQuantidadeResponse.quantidadePedidos());
     }
 }
