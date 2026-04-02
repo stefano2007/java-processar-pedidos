@@ -2,9 +2,7 @@ package com.stefano.java_processar_pedidos.controller;
 
 import com.stefano.java_processar_pedidos.controller.dto.ClienteQuantidadeResponse;
 import com.stefano.java_processar_pedidos.controller.dto.PagePedidoResponse;
-import com.stefano.java_processar_pedidos.controller.dto.PedidoResponse;
 import com.stefano.java_processar_pedidos.service.PedidoService;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
