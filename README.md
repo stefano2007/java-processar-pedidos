@@ -109,7 +109,7 @@ Status: 200 OK
 	"valorTotal": 120.00
 }
 ```
-Status: 404 Not Found
+Status: 404 Not Found (Response vazio)
 ```
 ```
 - Quantidade de Pedidos por Cliente
@@ -124,7 +124,7 @@ curl --request GET \
 	"quantidadePedidos": 1
 }
 ```
-Status: 404 Not Found
+Status: 404 Not Found (Response vazio)
 ```
 ```
 - Lista de pedidos realizados por cliente
@@ -203,3 +203,9 @@ docker compose up -d
 
 5. MongoDB: `mongodb://localhost:27017/` (banco de dados: pedidosdb)
  - No MongoDB deve ser configurado com uma coleção chamada `tb_pedidos`.
+
+6. Rode na raiz do projeto o comando para iniciar o projeto:
+```
+mvn spring-boot:run
+```
+- A API estará disponível em http://localhost:9090.
