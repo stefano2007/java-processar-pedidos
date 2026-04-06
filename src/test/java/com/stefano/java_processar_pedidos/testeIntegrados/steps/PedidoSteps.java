@@ -16,8 +16,10 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import static com.stefano.java_processar_pedidos.config.RabbitMqConfig.PEDIDO_CRIADO_QUEUE;
+import static com.stefano.java_processar_pedidos.config.RabbitMqConfig.PEDIDO_CRIADO_QUEUE_DLQ;
 import static org.hamcrest.Matchers.*;
 
 public class PedidoSteps {
@@ -170,6 +172,35 @@ public class PedidoSteps {
                 .body("[0].clienteId", equalTo(1))
                 .body("[0].totalPedidos", equalTo(120.00F))
                 .body("[0].quantidadePedidos", equalTo(1));
+    }
+
+
+    @Dado("que existe um pedido sem itens")
+    public void PedidoSemItens() {
+        mensagem = new PedidoCriadoMessage(
+                9999L,
+                1000L,
+                null
+        );
+    }
+
+    @Então("o pedido não deve ser salvo no banco")
+    public void validarPedidoNaoSalvo() throws InterruptedException {
+        Thread.sleep(2000);
+
+        Long pedidoId = 9999L;
+        Optional<PedidoEntity> pedido = pedidoRepository.findById(pedidoId);
+
+        Assertions.assertTrue(pedido.isEmpty(), "O pedido não deve ser salvo no banco");
+    }
+
+    @Então("o pedido deve ser enviado para a fila DLQ")
+    public void receberMensagem() {
+        Object mensagem = rabbitTemplate.receiveAndConvert(PEDIDO_CRIADO_QUEUE_DLQ);
+
+        Assertions.assertNotNull(mensagem, "A mensagem deve ter sido enviada para a fila DLQ");
+        Assertions.assertInstanceOf(PedidoCriadoMessage.class, mensagem, "A mensagem deve ser do tipo PedidoCriadoMessage");
+        Assertions.assertEquals(9999L, ((PedidoCriadoMessage) mensagem).codigoPedido(), "O código do pedido na mensagem deve ser 9999L");
     }
 
 }

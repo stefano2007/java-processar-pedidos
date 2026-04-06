@@ -42,3 +42,10 @@ Funcionalidade: Processamento de pedidos
     Quando eu chamar o endpoint de resumo de pedidos
     Então o status deve ser 200
     E deve retornar a lista de resumo de pedidos
+
+# validar DLQ
+  Cenário: Deve gerar um erro enviar para fila DLQ
+    Dado que existe um pedido sem itens
+    Quando a mensagem é enviada para a fila
+    Então o pedido não deve ser salvo no banco
+    E o pedido deve ser enviado para a fila DLQ
