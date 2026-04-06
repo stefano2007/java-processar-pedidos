@@ -40,7 +40,10 @@ public class PedidoSteps {
         mensagem = new PedidoCriadoMessage(
                 1000L,
                 1000L,
-                List.of()
+                List.of(
+                        new PedidoCriadoMessage.PedidoCriadoMessageItem("lápis", 100, BigDecimal.valueOf(1.10)),
+                        new PedidoCriadoMessage.PedidoCriadoMessageItem("caderno", 10, BigDecimal.valueOf(1.00))
+                )
         );
     }
 
@@ -60,8 +63,8 @@ public class PedidoSteps {
 
         Assertions.assertEquals(pedidoId, pedido.getPedidoId());
         Assertions.assertEquals(pedidoId, pedido.getClienteId());
-        Assertions.assertEquals(BigDecimal.ZERO, pedido.getValorTotal());
-        Assertions.assertEquals(0, pedido.getItens().size());
+        Assertions.assertEquals(BigDecimal.valueOf(120.0), pedido.getValorTotal());
+        Assertions.assertEquals(2, pedido.getItens().size());
     }
 
 

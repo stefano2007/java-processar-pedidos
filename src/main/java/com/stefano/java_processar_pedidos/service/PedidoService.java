@@ -40,6 +40,10 @@ public class PedidoService {
     }
 
     public List<PedidoItemEntity> obterItensPedido(List<PedidoCriadoMessage.PedidoCriadoMessageItem> itensPedido) {
+        if (itensPedido == null || itensPedido.isEmpty()) {
+            throw new IllegalArgumentException("O pedido deve conter pelo menos um item.");
+        }
+
         return itensPedido.stream()
                 .map(item -> new PedidoItemEntity(item.produto(), item.quantidade(), item.preco()))
                 .toList();
