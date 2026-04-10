@@ -45,6 +45,8 @@ Exemplo da mensagem que deve ser consumida:
 # Resolução
 Projeto: java-processar-pedidos
 
+![Estrutura do projeto](/readme/arquitetura.png)
+
 ## Plano de trabalho
 Elabore e entregue um plano de trabalho.
   - [x] Criar aplicação Java (JDK 21, Spring 3.5.13 e Maven) [Spring Initializr](https://start.spring.io/)
